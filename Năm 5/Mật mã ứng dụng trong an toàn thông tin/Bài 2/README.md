@@ -19,7 +19,7 @@
 
 ### Giải thích các phép toán
 - **Phép toán RotWord**: Là phép dịch byte sang trái 1 lần, ở i thứ 4 ta có temp = 31***31***276e, sau khi thực hiện phép toán RotWord ta có kết quả là  ***31***276e31
-- **Phép toán SubWord**: Là phép tham chiếu đến bảng [S-Box](#Bảng-S-\-Box), ví dụ ở i thứ 4 sau khi thực hiện phép RotWord ta tham chiếu byte đầu tiên là `31` ta sẽ tìm đến ***hàng 3*** ***cột 1*** của bảng S-Box sẽ có kết quả là `c7`
+- **Phép toán SubWord**: Là phép tham chiếu đến bảng [S-Box](#Bảng-S-Box), ví dụ ở i thứ 4 sau khi thực hiện phép RotWord ta tham chiếu byte đầu tiên là `31` ta sẽ tìm đến ***hàng 3*** ***cột 1*** của bảng S-Box sẽ có kết quả là `c7`
 - **Rcon**: [Rcon](#Bảng-Rcon) là 1 bảng ta có thể tham chiếu đến mà không cần phải tính toán lại
 
 ### Bảng Rcon
