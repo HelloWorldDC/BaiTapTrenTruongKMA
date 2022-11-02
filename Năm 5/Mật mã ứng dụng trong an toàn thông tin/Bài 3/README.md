@@ -44,7 +44,7 @@ $$
 $$
 
 **Vòng 1**:
-- ***SubByte***: Thực hiện tham chiếu đến bảng [S-Box](###Bảng-SBox)
+- ***SubByte***: Thực hiện tham chiếu đến bảng [S-Box](#Bảng-SBox)
 
 $$
 \begin{matrix}
