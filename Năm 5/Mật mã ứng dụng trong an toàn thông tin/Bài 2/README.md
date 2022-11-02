@@ -24,7 +24,9 @@
 - **XOR with Rcon**: Là phép toán lấy kết quả của phép ***SubWord*** XOR với ***Rcon***
 - **w[i]**: Là phép toán lấy kết quả của ***temp*** XOR với w thứ ***i - Nk***
 
-***Lưu ý***: Vì Nk = 4 nên ở i thứ 4, thứ 8, thứ 12, v..v.., w[i] sẽ lấy kết quả của phép toán ***XOR with Rcon*** XOR với ***w[i - Nk]*** thay vì phải dùng kết quả của **temp**
+***Lưu ý***:
+- Vì Nk = 4 nên ở i thứ 4, thứ 8, thứ 12, v..v.., w[i] sẽ lấy kết quả của phép toán ***XOR with Rcon*** XOR với ***w[i - Nk]*** thay vì phải dùng kết quả của **temp**
+- Vì Nk = 4 nên ở i thứ 4, thứ 8, thứ 12, v..v.. mới có các phép toán **RotWord**, **SubWord**, **Rcon**, **XOR with Rcon**
 
 ### Bảng Rcon
 | i | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
