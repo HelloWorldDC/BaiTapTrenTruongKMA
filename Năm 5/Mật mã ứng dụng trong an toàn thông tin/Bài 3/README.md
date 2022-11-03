@@ -7,7 +7,7 @@ AES làm việc theo dạng ma trận 4 hàng 4 cột
 - **AddRoundKey**: Là phép XOR với Key Expansion
 - **SubByte**: Là phép tham chiếu đến bảng [S-Box](#Bảng-SBox)
 - **ShiftRows**: Là phép dịch trái 1 byte, 2 byte và 3 byte lần lượt là hàng thứ 2, thứ 3 và thứ 4
-- **MixColumns**: Là phép nhân ma trận với bảng [MixColumns](#Bảng-MixColumns) đã được định nghĩa sẵn với các phép toán trên trường Galois GF( $2^8$ )
+- **MixColumns**: Là phép nhân ma trận với bảng [MixColumns](#Bảng-MixColumns) đã được định nghĩa sẵn với các phép toán trên trường Galois GF( $2^8$ ), sau đó thực hiện ***mod*** cho đa thức được định nghĩa sẵn $\boldsymbol{x^8 + x^4 + x^3 + x + 1}$, thực hiện chia đa thức như bình thường, ***các phép cộng và phép trừ bị âm thì chuyển thành dương và thực hiện mod 2***
 ### Ví dụ
 ***Input***:
 - Plaintext = a3 c5 08 08 78 a4 ff d3 00 ff 36 36 28 5f 01 02
@@ -98,17 +98,17 @@ $$
 
 $$
 \begin{matrix}
-    2a & 2a & 30 & d4 \\
-    7f & 4a & 9f & 84 \\
-    cd & f7 & e8 & a7 \\
-    50 & b0 & 9d & 2f 
-   \end{matrix}
-   \times
-   \begin{matrix}
     02 & 03 & 01 & 01 \\
     01 & 02 & 03 & 01 \\
     01 & 01 & 02 & 03 \\
     03 & 01 & 01 & 02 
+   \end{matrix}
+   \times
+\begin{matrix}
+    2a & 2a & 30 & d4 \\
+    7f & 4a & 9f & 84 \\
+    cd & f7 & e8 & a7 \\
+    50 & b0 & 9d & 2f 
    \end{matrix}
    \rightarrow
    \begin{matrix}
@@ -122,25 +122,54 @@ $$
 Ta có:
 
 1. Thực hiện nhân ma trận 
-    - (2a $\times$ 02) $\oplus$ (2a $\times$ 01) $\oplus$ (30 $\times$ 01) $\oplus$ (d4 $\times$ 03)
+    - (02 $\times$ 2a) $\oplus$ (03 $\times$ 7f) $\oplus$ (01 $\times$ cd) $\oplus$ (01 $\times$ 50)
 2. Phân tích phép nhân
-    - Cụm (2a $\times$ 02):
-      - $(2a)_6$ = $(00100110)_2$ = $x^5 + x^2 + x$
+    - Cụm (02 $\times$ 2a):
       - $(02)_6$ = $(00000010)_2$ = $x$
-      - $(x^5 + x^2 + x)x$ = $x^6 + x^3 + x^2$ = $(01001100)_2$
-    - Cụm (2a $\times$ 01):
-      - $(2a)_6$ = $(00100110)_2$ = $x^5 + x^2 + x$
-      - $(01)_2$ = $(00000001)_2$ = $1$
-      - $(x^5 + x^2 + x)1$ = $x^5 + x^2 + x$ = $(00100110)_2$
-    - Cụm (30 $\times$ 01):
-      - $(30)_6$ = $(00110000)_2$ = $x^5 + x^4$
-      - $(01)_6$ = $(00000001)_2$ = 1
-      - $(x^5 + x^4)1$ = $x^5 + x^4$ = $(00110000)$
-    - Cụm (d4 $\times$ 03):
-      - $(d4)_6$ = $(11010100)_2$ = $x^7 + x^6 + x^4 + x^2$
+      - $(2a)_6$ = $(00101010)_2$ = $x^5 + x^3 + x$
+      - $(x^5 + x^3 + x)x$ = $x^6 + x^4 + x^2$\
+      $\Rightarrow$ $x^6 + x^4 + x^2 \bmod x^8 + x^4 + x^3 + x + 1 = x^6 + x^4 + x^2 = (01010100)_2$
+    - Cụm (03 $\times$ 7f):
       - $(03)_6$ = $(00000011)_2$ = $x + 1$
-      - $(x^7 + x^6 + x^4 + x^2)(x + 1)$ = $x^8 + x^7 + x^7 + x^6 + x^5 + x^4 + x^3 + x^2$ = $x^8 + 2x^7 + x^6 + x^5 + x^4 + x^3 + x^2$ = $x^8 + (2 \bmod 2)x^7 + x^6 + x^5 + x^4 + x^3 + x^2$ = $x^8 + 0x^7 + x^6 + x^5 + x^4 + x^3 + x^2$ = $x^8 + x^6 + x^5 + x^4 + x^3 + x^2$
+      - $(7f)_6$ = $(01111111)_2$ = $x^6 + x^5 + x^4 + x^3 + x^2 + x + 1$
+      - $(x^6 + x^5 + x^4 + x^3 + x^2 + x + 1)(x + 1)$ = $x^7 + x^6 + x^6 + x^5 + x^5 + x^4 + x^4 + x^3 + x^3 + x^2 + x^2 + x + x + 1$\
+      &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&emsp;&emsp;&ensp;&emsp;&emsp;&ensp;&emsp;= $x^7 + 2x^6 + 2x^5 + 2x^4 + 2x^3 + 2x^2 + 2x + 1$\
+      &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&emsp;&emsp;&ensp;&emsp;&emsp;&ensp;&emsp;= $x^7 + (2 \bmod 2)x^6 + (2 \bmod 2)x^5 + (2 \bmod 2)x^4 + (2 \bmod 2)x^3$\
+      &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&emsp;&emsp;&ensp;&emsp;&emsp;&ensp;&emsp;&emsp;&ensp;&ensp; $+$ $(2 \bmod 2)x^2 + (2 \bmod 2)x + 1$ [^1]\
+      &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&emsp;&emsp;&ensp;&emsp;&emsp;&ensp;&emsp;= $x^7 + 0x^6 + 0x^5 + 0x^4 + 0x^3 + 0x^2 + 0x + 1$\
+      &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&emsp;&emsp;&ensp;&emsp;&emsp;&ensp;&emsp;= $x^7 + 1$\
+      $\Rightarrow$ $x^7 + 1 \bmod x^8 + x^4 + x^3 + x + 1 = x^7 + 1 = (10000001)_2$
       
+    - Cụm (01 $\times$ cd):
+      - $(01)_6$ = $(00000001)_2$ = $1$
+      - $(cd)_6$ = $(11001101)_2$ = $x^7 + x^6 + x^3 + x^2 +1$
+      - $(x^7 + x^6 + x^3 + x^2 +1)1$ = $x^7 + x^6 + x^3 + x^2 +1$\
+      $\Rightarrow$ $x^7 + x^6 + x^3 + x^2 +1 \bmod x^8 + x^4 + x^3 + x + 1 = x^7 + x^6 + x^3 + x^2 +1 = (11001101)_2$
+    - Cụm (01 $\times$ 50):
+      - $(01)_6$ = $(00000001)_2$ = $1$
+      - $(50)_6$ = $(01010000)_2$ = $x^6 + x^4$
+      - $(x^6 + x^4)(1)$ = $x^6 + x^4$\
+      $\Rightarrow$ $x^6 + x^4 \bmod x^8 + x^4 + x^3 + x + 1 = x^6 + x^4 = (01010000)_2$
+      
+3. Thực hiện XOR
+
+$$
+\begin{equation}
+\frac{
+    \begin{array}[b]{r}
+      \left( 01010100 \right)_2\\
+      \left( 10000001 \right)_2\\
+      \left( 11001101 \right)_2\\
+      \left( 01010000 \right)_2
+    \end{array}
+  }{
+    \left( 01001000 \right)_2
+  }
+\end{equation}
+$$
+
+&emsp;&emsp;&emsp; $\Rightarrow$ $(01001000)_2 = (48)_6$\
+&emsp;&emsp;&emsp; Tương tự ta tính được các kết quả như hình trên
       
 - ***AddRoundKey***: Thực hiện XOR với các từ từ w[4] đến w[7] của thuật toán Key Expansion đối chiếu ở bài 2 sắp xếp như hình bên dưới
 
@@ -231,3 +260,5 @@ $$
 
 </p>
 </details>
+
+[^1]: Vì AES thực hiện các phép toán trên trường GF( $2^8$ ) nên chỉ có 2 giá trị 0 và 1 nên ta phải $\bmod$ cho 2 để có thể đưa về giá trị 0 hoặc 1
