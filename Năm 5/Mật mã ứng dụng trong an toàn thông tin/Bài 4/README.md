@@ -1,5 +1,5 @@
 # Thuật toán giải mã AES
->Các phép toán thực hiện giống với các phép toán bên mã hóa ( Xem thuật toán mã hóa [ở đây](../Bài%203/README.md) )chỉ khác bên giải mã dùng bảng [S-Box Ngược](#Bảng-SBox-Ngược) để tham chiếu đến và dùng bảng [MixColumns Ngược](#Bảng-MixColumns-Ngược) để thực hiện phép toán MixColumns
+>Các phép toán thực hiện giống với các phép toán bên mã hóa ( Xem thuật toán mã hóa [ở đây](../Bài%203/README.md) ) chỉ khác bên giải mã dùng bảng [S-Box Ngược](#Bảng-SBox-Ngược) để tham chiếu đến và dùng bảng [MixColumns Ngược](#Bảng-MixColumns-Ngược) để thực hiện phép toán MixColumns
 
 # Sơ đồ thuật toán giả mã (Bên phải)
 ![](Sơ_đồ_thuật_toán_AES.png)
