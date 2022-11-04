@@ -22,6 +22,7 @@ public class Jacobi {
 		if (n % 2 == 0) {
 			System.out.println("Không tồn tại ký hiệu Jacobi");
 		} else {
+// 			Lặp đến khi a = 1 hoặc a = 0 tức 1/n hoặc 0/n thì dừng
 			while (a != 1 && a != 0) {
 				if (a % 2 != 0 && n % 2 != 0) {
 					if (a % 4 == 3 && n % 4 == 3 && a < n) {
