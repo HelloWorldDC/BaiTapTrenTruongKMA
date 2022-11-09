@@ -80,6 +80,12 @@ Tương tự ta có các kết quả còn lại
 
 $$
 \begin{matrix}
+    \\
+    dịch &ensp; trái \rightarrow \\
+    \\
+    \\
+   \end{matrix}
+\begin{matrix}
     2a & 2a & 30 & d4 \\
     84 & 7f & 4a & 9f \\
     e8 & a7 & cd & f7 \\
@@ -92,9 +98,15 @@ $$
     cd & f7 & e8 & a7 \\
     50 & b0 & 9d & 2f 
    \end{matrix}
+   \begin{matrix}
+    \\
+    \leftarrow kết &ensp; quả &ensp; dịch &ensp; trái\\
+    \\
+    \\
+   \end{matrix}
 $$
 
-- ***MixColumns***: Thực hiện nhân ma với bảng [MixColumns](#Bảng-MixColumns) đã được định nghĩa sẵn với các phép toán trên trường Galois GF( $2^8$ )
+- ***MixColumns***: Thực hiện nhân ma trận với bảng [MixColumns](#Bảng-MixColumns) đã được định nghĩa sẵn với các phép toán trên trường Galois GF( $2^8$ )
 
 $$
 \begin{matrix}
