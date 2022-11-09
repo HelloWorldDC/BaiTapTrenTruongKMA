@@ -1,4 +1,4 @@
-# Giải thích thuật toán mã hóa
+# Giải thích thuật toán mã hóa (128 bit)
 AES làm việc theo dạng ma trận 4 hàng 4 cột
 ### Sơ đồ thuật toán
 ![Sơ đồ thuật toán](Sơ_đồ_thuật_toán_AES.png)
